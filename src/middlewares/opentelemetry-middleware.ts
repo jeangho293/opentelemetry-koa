@@ -4,7 +4,9 @@ import { SemanticResourceAttributes } from "@opentelemetry/semantic-conventions"
 import { registerInstrumentations } from "@opentelemetry/instrumentation";
 import { trace } from "@opentelemetry/api";
 import { KoaInstrumentation } from "@opentelemetry/instrumentation-koa";
-import { Context } from "koa";
+import { SimpleSpanProcessor } from "@opentelemetry/sdk-trace-base";
+import { ZipkinExporter } from "@opentelemetry/exporter-zipkin";
+import type { Context } from "koa";
 
 const provider = new NodeTracerProvider({
   resource: new Resource({
