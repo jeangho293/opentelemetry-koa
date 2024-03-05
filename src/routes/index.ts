@@ -7,12 +7,11 @@ export const globalRouter = new Router();
 globalRouter.get("/ping", async (ctx) => {
   latency(1000000000, 1);
   latency(5000000000, 2);
-  const currentSpan = api.trace
-    .getTracer("core-api")
-    .startSpan("GET 3000:/ping", {});
-  const { data } = await axios.default.get("http://localhost:3001/ping");
-  currentSpan.end();
 
+  api.propagation.inject(api.context.active(), ctx.headers);
+  const { data } = await axios.default.get("http://localhost:3001/ping", {
+    headers: ctx.headers,
+  });
   ctx.body = data;
 });
 
@@ -20,7 +19,12 @@ globalRouter.get("/ping", async (ctx) => {
 export const globalRouter2 = new Router();
 
 globalRouter2.get("/ping", async (ctx) => {
+  const context = api.propagation.extract(api.context.active(), ctx.headers);
+
+  const tracer = api.trace.getTracer("app2");
+  const span = tracer.startSpan("app2", {}, context);
   for (let i = 0; i < 1000000000; i++) {}
+  span.end();
   ctx.body = "pong";
 });
 

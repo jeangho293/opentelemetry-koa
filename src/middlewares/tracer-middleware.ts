@@ -13,7 +13,7 @@ export const tracerMiddleWare = async (
   span.setAttribute("txId", txId);
 
   await api.context.with(
-    api.trace.setSpan(api.ROOT_CONTEXT, span),
+    api.trace.setSpan(api.context.active(), span),
     async () => {
       await next();
       span.end();
