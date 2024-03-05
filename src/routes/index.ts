@@ -6,7 +6,7 @@ export const globalRouter = new Router();
 
 globalRouter.get("/ping", async (ctx) => {
   latency(1000000000, 1);
-  latency(10000000000, 2);
+  latency(5000000000, 2);
   const currentSpan = api.trace
     .getTracer("core-api")
     .startSpan("GET 3000:/ping", {});
