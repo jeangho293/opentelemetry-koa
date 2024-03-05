@@ -19,6 +19,7 @@
     "@opentelemetry/sdk-trace-base": "^1.22.0",
     "@opentelemetry/sdk-trace-node": "^1.20.0",
     "@opentelemetry/semantic-conventions": "^1.20.0",
+    "axios": "^1.6.7",
     "dotenv": "^16.3.1",
     "koa": "^2.15.0",
     "uuid": "^9.0.1"
