@@ -9,16 +9,16 @@ import {
   NodeTracerProvider,
   SimpleSpanProcessor,
 } from "@opentelemetry/sdk-trace-node";
-import { SemanticResourceAttributes } from "@opentelemetry/semantic-conventions";
+import { SEMRESATTRS_SERVICE_NAME } from "@opentelemetry/semantic-conventions";
 
 export const openTelemetryTracer = (serviceName: string) => {
   const provider = new NodeTracerProvider({
     resource: new Resource({
-      [SemanticResourceAttributes.SERVICE_NAME]: serviceName,
+      [SEMRESATTRS_SERVICE_NAME]: serviceName,
     }),
   });
 
-  provider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
+  //   provider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
   provider.addSpanProcessor(new SimpleSpanProcessor(new ZipkinExporter()));
 
   registerInstrumentations({
