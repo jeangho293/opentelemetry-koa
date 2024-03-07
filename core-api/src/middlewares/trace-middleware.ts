@@ -8,9 +8,7 @@ function extractParentContext(ctx: Context) {
 
 export const tracerMiddleWare = async (ctx: Context, next: Next) => {
   const { txId } = ctx.state as { txId: string };
-  const tracer = openTelemetryTracer("core-api");
-
-  const span = tracer.startSpan(
+  const span = openTelemetryTracer().startSpan(
     ctx.request.path,
     {
       attributes: {

@@ -11,10 +11,10 @@ import {
 } from "@opentelemetry/sdk-trace-node";
 import { SEMRESATTRS_SERVICE_NAME } from "@opentelemetry/semantic-conventions";
 
-export const openTelemetryTracer = (serviceName: string) => {
+export const openTelemetryTracer = () => {
   const provider = new NodeTracerProvider({
     resource: new Resource({
-      [SEMRESATTRS_SERVICE_NAME]: serviceName,
+      [SEMRESATTRS_SERVICE_NAME]: "core-api",
     }),
   });
 
@@ -36,5 +36,5 @@ export const openTelemetryTracer = (serviceName: string) => {
 
   provider.register();
 
-  return api.trace.getTracer(serviceName);
+  return api.trace.getTracer("core-api");
 };
